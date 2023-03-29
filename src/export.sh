@@ -25,7 +25,7 @@ for slug in "${slug_list[@]}"; do
     # Set the list build endpoint URL for the current pipeline slug
     api_url="https://api.buildkite.com/v2/organizations/$BUILDKITE_ORGANIZATION_SLUG/pipelines/$slug/builds"
 
-    # Make the API request with curl and do something with the response
+    # Make the API request with curl and generate builds per pipeline in a file
     response_status=$(curl -s -H "Authorization: Bearer $TOKEN" -w "%{http_code}" -o "pipelines_${slug}.json" $api_url)
 
     # Check if the response code is 200 OK
