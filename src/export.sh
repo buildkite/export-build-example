@@ -4,8 +4,9 @@ slug_list=()
 
 # Make the curl request to get list of pipelines
 api_url="https://api.buildkite.com/v2/organizations/$BUILDKITE_ORGANIZATION_SLUG/pipelines"
+#option to use "$?" != "200"
 if ! [[$(curl -s -H "Authorization: Bearer $TOKEN" $api_url)>pipelines.json]]; then
-      echo "Failed to get pipeline data"
+      echo "Error $?: Failed to get pipeline data"
       exit 1
 fi
 slugs=jq -r '.[].slug' pipelines.json
