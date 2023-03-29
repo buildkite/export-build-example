@@ -4,7 +4,7 @@ slug_list=()
 
 # Make the curl request to get list of pipelines
 api_url="https://api.buildkite.com/v2/organizations/$BUILDKITE_ORGANIZATION_SLUG/pipelines"
-response_status=$(curl -s -H "Authorization: Bearer $TOKEN" -w "%{http_code}" -o "pipelines.json" $api_url)
+response_status=$(curl -s -H "Authorization: Bearer $TOKEN" -w "%{http_code}" -o "pipelines.json" "$api_url")
 
 # Check if the response code is 200 OK
 if [ "$response_status" -ne 200 ]; then
@@ -26,7 +26,7 @@ for slug in "${slug_list[@]}"; do
     api_url="https://api.buildkite.com/v2/organizations/$BUILDKITE_ORGANIZATION_SLUG/pipelines/$slug/builds"
 
     # Make the API request with curl and generate builds per pipeline in a file
-    response_status=$(curl -s -H "Authorization: Bearer $TOKEN" -w "%{http_code}" -o "pipelines_${slug}.json" $api_url)
+    response_status=$(curl -s -H "Authorization: Bearer $TOKEN" -w "%{http_code}" -o "pipelines_${slug}.json" "$api_url")
 
     # Check if the response code is 200 OK
     if [ "$response_status" -ne 200 ]; then
