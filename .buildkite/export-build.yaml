@@ -1,0 +1,3 @@
+steps:
+  - label: "export build data"
+    command: ./src/export.sh
