@@ -18,7 +18,8 @@ if ! slugs=$(jq -r '.[].slug' < "pipelines.json"); then
   exit 1
 fi
 
-slug_list+=($slugs)
+# Create a list with all the pipeline slugs
+slug_list+=("${slugs// /}")
 
 # Loop through the pipeline slug list and get list of builds for each pipeline slug
 for slug in "${slug_list[@]}"; do
