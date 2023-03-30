@@ -40,7 +40,6 @@ steps:
   - label: "export build data as Artifact"
     command: ./src/export_artifact.sh
 ```
-Note: This won't work, when running scripts through local machine
 
 ## License
 
