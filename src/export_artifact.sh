@@ -18,6 +18,13 @@ if ! slugs=$(jq -r '.[].slug' < "pipelines.json"); then
   exit 1
 fi
 
+# Create Folder for Artifact
+rm -r pipelines/
+mkdir -p pipelines
+
+# Copy file to Folder
+cp pipelines.json pipelines/
+
 # Create a list with all the pipeline slugs
 slug_list+=($slugs)
 
@@ -34,4 +41,9 @@ for slug in "${slug_list[@]}"; do
        echo "Error: Failed to get build data from API with HTTP status code $response_status"
        exit 1
     fi
+    # Copy file to Folder
+    cp pipelines_${slug}.json pipelines/
 done
+
+# Upload Artifacts 
+buildkite-agent artifact upload "pipelines/*"
