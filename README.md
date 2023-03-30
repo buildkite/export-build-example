@@ -11,7 +11,13 @@ The scripts in the src/ folder, can be used for:
 ## Steps for Local Machine
 git clone https://github.com/buildkite/export-build-example.git <br/>
 cd into folder  <br/>
-Enter "./src/export.sh" or ".src/export_s3.sh" depending on where data is to be stored <br/>
+Enter "./src/export.sh" or ".src/export_s3.sh" depending on where JSON file is to be stored <br/>
+
+## Steps for Buildkite UI
+Create Pipeline <br/>
+Enter Git Repository URL <br/>
+Upload Yaml <br/>
+Create New Build
 
 ## Examples
 ### Get Files Locally
