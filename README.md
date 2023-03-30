@@ -5,11 +5,13 @@ This repository is an example [Buildkite](https://buildkite.com/) pipeline for r
 
 The scripts in the src/ folder, can be used for:
 * Get Files Locally: /src/export.sh
-* Upload to S3 Bucket: ./src/export_s3.sh
+* Upload to S3 Bucket: /src/export_s3.sh
 * Upload as Artifact: /src/export_artifact.sh
 
-## Steps for Local
-git clone 
+## Steps for Local Machine
+git clone https://github.com/buildkite/export-build-example.git
+cd into folder
+Enter "./src/export.sh" or ".src/export_s3.sh" depending on where data is to be stored
 
 ## Examples
 ### Get Files Locally
