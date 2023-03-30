@@ -8,16 +8,11 @@ The scripts in the src/ folder, can be used for:
 * Upload to S3 Bucket: /src/export_s3.sh
 * Upload as Artifact: /src/export_artifact.sh
 
-## Steps for Local Machine
+## Steps for running on Local Machine
 git clone https://github.com/buildkite/export-build-example.git <br/>
 cd into folder  <br/>
 Enter "./src/export.sh" or ".src/export_s3.sh" depending on where JSON file is to be stored <br/>
-
-## Steps for Buildkite UI
-Create Pipeline <br/>
-Enter Git Repository URL <br/>
-Upload Yaml <br/>
-Create New Build
+```
 
 ## Examples
 ### Get Files Locally
