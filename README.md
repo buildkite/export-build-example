@@ -8,7 +8,8 @@ The scripts in the src/ folder, can be used for:
 * Upload to S3 Bucket: ./src/export_s3.sh
 * Upload as Artifact: /src/export_artifact.sh
 
-
+## Steps for Local
+git clone 
 
 ## Examples
 ### Get Files Locally
@@ -20,7 +21,7 @@ steps:
 ```
 
 ### Upload Files to S3 Bucket
-In this example, we would export the build data for all pipelines to S3 Bucket
+To  export the build data for all pipelines to an S3 Bucket
 
 #### Requirement
 * awscli 
@@ -35,12 +36,14 @@ steps:
 
 ### Get Files as Artifact
 
-In this example, we would export the build data for all pipelines as an artifact
+To export the build data for all pipelines as an artifact
 ```yml
 steps:
   - label: "export build data as Artifact"
     command: ./src/export_artifact.sh
 ```
+Note: This won't work, when running data scripts through local machine
+
 ## License
 
 See [License.md](License.md) (MIT)
