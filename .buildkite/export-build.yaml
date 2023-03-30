@@ -1,0 +1,5 @@
+steps:
+  - label: "export build data"
+    commands:
+      - ./src/export.sh
+      - buildkite-agent artifact upload *.json 
