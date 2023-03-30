@@ -21,6 +21,9 @@ steps:
   - label: "export build data to S3 Bucket"
     command: ./src/export_s3.sh
 ```
+#### Requirement
+awscli 
+s3 bucket
 
 
 ## Get Files as Artifact
