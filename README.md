@@ -17,7 +17,9 @@ steps:
   - label: "export build data to Local Machine"
     command: ./src/export.sh
 ```
-
+```bash
+./export.sh
+```
 ### Upload Files to S3 Bucket
 To  export the build data for all pipelines to an S3 Bucket
 
