@@ -20,7 +20,7 @@ fi
 
 
 # Upload file to s3 bucket
- aws s3 cp "pipelines.json" s3://my_bucket_name/
+ aws s3 cp "pipelines.json" s3://$my_bucket_name/
 
 
 # Create a list with all the pipeline slugs
@@ -41,5 +41,5 @@ for slug in "${slug_list[@]}"; do
     fi
 
     # Upload the pipeline and builds data files to S3 bucket
-    aws s3 cp "pipelines_${slug}.json" s3://my_bucket_name/
+    aws s3 cp "pipelines_${slug}.json" s3://$my_bucket_name/
 done
