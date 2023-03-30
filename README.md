@@ -1,7 +1,7 @@
 # export-build-example
 A pipeline template example to export builds via the API
 
-This repository is an example [Buildkite](https://buildkite.com/) pipeline for running a script to get Build data to be stored S3 Bucket, Artifact, or Local Machine 
+This repository is an example [Buildkite](https://buildkite.com/) pipeline for running scripts to get Build data to be stored S3 Bucket, Artifact, or to the Local Machine 
 
 ## Get Files Locally
 ### Example
