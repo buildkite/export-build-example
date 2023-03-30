@@ -8,14 +8,10 @@ The scripts in the src/ folder, can be used for:
 * Upload to S3 Bucket: ./src/export_s3.sh
 * Upload as Artifact: /src/export_artifact.sh
 
-# Get started
-## Run Locally
 
-## Run on Buildkite
 
-### Examples
-
-## Get Files Locally
+## Examples
+### Get Files Locally
 To export the build data for all pipelines to local machine
 ```yml
 steps:
@@ -23,7 +19,7 @@ steps:
     command: ./src/export.sh
 ```
 
-## Upload Files to S3 Bucket
+### Upload Files to S3 Bucket
 In this example, we would export the build data for all pipelines to S3 Bucket
 ```yml
 steps:
