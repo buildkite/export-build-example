@@ -11,11 +11,11 @@ The scripts in the src/ folder, can be used for:
 # Get started
 ## Run Locally
 
-## r
+## Run on Buildkite
+
+### Examples
 
 ## Get Files Locally
-### Example
-
 To export the build data for all pipelines to local machine
 ```yml
 steps:
