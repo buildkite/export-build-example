@@ -5,6 +5,12 @@ This repository is an example [Buildkite](https://buildkite.com/) pipeline for r
 
 The script simply prints some debug output with an inline image, some artifacts, and exits with a success code (0).
 
+## Get Files Locally
+
+## Upload Files to S3 Bucket
+
+
+## Get Files as Artifact
 
 ## License
 
