@@ -12,16 +12,14 @@ if [ "$response_status" -ne 200 ]; then
   exit 1
 fi
 
+# Upload file to s3 bucket
+ aws s3 cp "pipelines.json" s3://$my_bucket_name/
+ 
 # Extract the slug values from the response and add them to the slug list
 if ! slugs=$(jq -r '.[].slug' < "pipelines.json"); then
   echo "Error: Failed to extract pipeline slug values"
   exit 1
 fi
-
-
-# Upload file to s3 bucket
- aws s3 cp "pipelines.json" s3://$my_bucket_name/
-
 
 # Create a list with all the pipeline slugs
 slug_list+=($slugs)
