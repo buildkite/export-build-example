@@ -19,8 +19,10 @@ if ! slugs=$(jq -r '.[].slug' < "pipelines.json"); then
 fi
 
 # Create Folder for Artifact
-rm -r pipelines/
-mkdir -p pipelines
+if [ -d "pipelines/" ]; then
+    rm -r pipelines
+fi
+mkdir pipelines
 
 # Copy file to Folder
 cp pipelines.json pipelines/
