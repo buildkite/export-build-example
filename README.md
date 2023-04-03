@@ -33,7 +33,7 @@ steps:
 #### Artifact in UI
 ![Screenshot of result in Buildkite User Interface](images/artifact.png)
 
-Note: If you need permanent storage for the build data in your Private S3 Bucket. Follow the [Using your own private AWS S3 Bucket](https://buildkite.com/docs/agent/v3/cli-artifact#using-your-private-aws-s3-bucket)
+**Note** : If you need permanent storage for the build data in your Private S3 Bucket. Follow the [Using your own private AWS S3 Bucket](https://buildkite.com/docs/agent/v3/cli-artifact#using-your-private-aws-s3-bucket)
 
 
 
