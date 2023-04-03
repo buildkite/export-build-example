@@ -4,6 +4,8 @@ steps:
 
   - label: "export build data to S3 Bucket"
     command: ./src/export_s3.sh
+    env:
+     S3_BUCKET: "${S3_BUCKET}"
 
   - label: "export build data as Artifact"
     command: ./src/export_artifact.sh
