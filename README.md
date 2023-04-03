@@ -63,13 +63,13 @@ This example filters based on the created_from attribute, results in builds crea
 This example filters based on the created_to attribute, results in  builds created before the given time
 ```bash
 # This returns all builds created before 28th March 2022
-curl -H "Authorization: Bearer $TOKEN" "https://api.buildkite.com/v2/organizations/$BUILDKITE_ORGANIZATION_SLUG/pipelines/$slug/builds?created_to=2022-03-28"
+   api_url="https://api.buildkite.com/v2/organizations/$BUILDKITE_ORGANIZATION_SLUG/pipelines/$slug/builds?created_to=2022-03-28"
 ```
 
 This example filters based on the created_from & created_to attributes this gives a range
 ```bash
 # This returns all builds created on or after 25th March 2022 and before 28th March 2022
-curl -H "Authorization: Bearer $TOKEN" "https://api.buildkite.com/v2/organizations/{org.slug}/pipelines/{pipeline.slug}/builds?created_from=2022-03-25&created_to=2022-03-28" 
+   api_url="https://api.buildkite.com/v2/organizations/{org.slug}/pipelines/{pipeline.slug}/builds?created_from=2022-03-25&created_to=2022-03-28" 
 ```
 
 ### Build State Filter
