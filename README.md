@@ -33,29 +33,9 @@ steps:
 #### Artifact in UI
 ![Screenshot of result in Buildkite User Interface](images/artifact.png)
 
-Note: If you need permanent storage for the build data, is it advisable to use the example "Upload Files to S3 Bucket" <br/>
+Note: If you need permanent storage for the build data in your Private S3 Bucket. Follow the [Using your own private AWS S3 Bucket](https://buildkite.com/docs/agent/v3/cli-artifact#using-your-private-aws-s3-bucket)
 
-### Upload Files to S3 Bucket
-To  export the build data for all pipelines to the User's S3 Bucket
 
-#### Requirement
-* Awscli 
-* S3 bucket
-* Store S3 Bucket Name in [Environment Hook](https://buildkite.com/docs/pipelines/secrets#exporting-secrets-with-environment-hooks) 
-
-```bash
-#!/bin/bash
-set -uo pipefail
-export S3_BUCKET="YOUR_S3_BUCKET_NAME"
-
-```
-```yml
-steps:
-  - label: "export build data to S3 Bucket"
-    command: ./src/export_s3.sh
-    env:
-     S3_BUCKET: "${S3_BUCKET}"
-```
 
 ## Adding Filters
 ### Timestamp Filter
