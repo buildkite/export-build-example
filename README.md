@@ -89,7 +89,7 @@ This example filters based on the state of the build. The query below returns al
 ```
 
 ### Using Timestamp and Build State Filters
-Filters the results by the given build state as well as hte timestamp.  You need to edit the api_url variable for the script in the src/ folder.
+Filters the results by the given build state as well as the timestamp.  You need to edit the api_url variable for the script in the src/ folder.
 ### Examples
 This example filters based on the timestamp range as well as build state
 ```bash
