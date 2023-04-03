@@ -59,26 +59,9 @@ steps:
 
 ## Adding Filters
 ### Timestamp Filter
-To use the Timestamp Filter, you need to edit the build_url variable for the script in the src/ folder. The two attributes [created_from](https://buildkite.com/docs/apis/rest-api/builds#list-all-builds) & [created_to](https://buildkite.com/docs/apis/rest-api/builds#list-all-builds) are used to specify the date range and time.
+To use the Timestamp Filter, you need to edit the build_url variable for the script in the src/ folder. The two attributes [created_from](https://buildkite.com/docs/apis/rest-api/builds#list-all-builds) & [created_to](https://buildkite.com/docs/apis/rest-api/builds#list-all-builds) are used to specify the date range and time. In script
 
 ### Examples
-This example filters based on the created_from attribute, results in builds created on or after the given time: 
-
-Using Optional query parameter ?created_from=
-
-```bash
-# This returns all builds created on or after 2nd April 2023
-    build_url="https://api.buildkite.com/v2/organizations/$BUILDKITE_ORGANIZATION_SLUG/pipelines/$slug/builds?created_from=2023-04-02"
-```
-
-This example filters based on the created_to attribute, results in  builds created before the given time: 
-
-Using Optional query parameter ?created_to=
-
-```bash
-# This returns all builds created before 28th March 2022
-  build_url="https://api.buildkite.com/v2/organizations/$BUILDKITE_ORGANIZATION_SLUG/pipelines/$slug/builds?created_to=2022-03-28"
-```
 
 This example filters based on the created_from & created_to attributes this gives a range: 
 
@@ -100,15 +83,6 @@ Using Optional query parameter ?state=
 ```bash
 # This returns all passed builds
     build_url="https://api.buildkite.com/v2/organizations/$BUILDKITE_ORGANIZATION_SLUG/pipelines/$slug/builds?state=passed"
-```
-
-This example filters based on multiples state of the build. The query below returns all builds in the pipeline that are scheduled and running: 
-
-Using Optional query parameter ?state[]= & state[]=
-
-```bash
-# This returns all scheduled and running builds
-    build_url="https://api.buildkite.com/v2/organizations/$BUILDKITE_ORGANIZATION_SLUG/pipelines/$slug/builds?state[]=scheduled&state[]=running"
 ```
 
 ### Using Timestamp and Build State Filters
