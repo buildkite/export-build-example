@@ -45,7 +45,7 @@ Using Optional query parameter ?created_from= & created_to=
 
 ```bash
 # This returns all builds created on or after 25th March 2022 and before 28th March 2022
-   build_url="https://api.buildkite.com/v2/organizations/{org.slug}/pipelines/{pipeline.slug}/builds?created_from=2022-03-25&created_to=2022-03-28" 
+   api_url="https://api.buildkite.com/v2/organizations/{org.slug}/pipelines/{pipeline.slug}/builds?created_from=2022-03-25&created_to=2022-03-28" 
 ```
 
 ### Build State Filter
@@ -58,7 +58,7 @@ Using Optional query parameter ?state=
 
 ```bash
 # This returns all passed builds
-    build_url="https://api.buildkite.com/v2/organizations/$BUILDKITE_ORGANIZATION_SLUG/pipelines/$slug/builds?state=passed"
+    api_url="https://api.buildkite.com/v2/organizations/$BUILDKITE_ORGANIZATION_SLUG/pipelines/$slug/builds?state=passed"
 ```
 
 ## License
