@@ -1,7 +1,7 @@
 # Pipeline Template Example: Export Builds
-
+<!--
 [![Add to Buildkite](https://buildkite.com/button.svg)](https://buildkite.com/new)
-
+-->
 A pipeline template example to export builds via the API, stores the results as JSON file
 
 This repository is an example [Buildkite](https://buildkite.com/) pipeline for running scripts to get build data exported  to S3 Bucket, Artifact, or to the Local Machine 
@@ -41,7 +41,7 @@ steps:
 The files can be accessed on the local machine from the Builds directory ../buildkite-agent/builds. The respective pipeline folder contains the JSON files for each pipeline in the organization
 
 ### Get Files as Artifact
-In this example, the build data for a pipeline and is exported as an Artifact. The Artifact can be viewed and also downloaded. 
+In this example, the build data for a pipeline is exported as an Artifact. The Artifact can be viewed and also downloaded. 
 
 **Note:** You need to use flag **"-e"**, and the value must be "**artifact**"
 
