@@ -12,7 +12,7 @@ while getopts "hp:s:f:t:" opt; do
     h)
       echo "Usage: ./export.sh -p <pipeline_slug> -s <build_state> -f <created_from> -t <created_to>"
       echo "Options:"
-      echo "  -p    slug of pipeline you want to export. If you want to export all pipelines then no need to use -p flag"
+      echo "  -p    Slug of pipeline you want to export. If you want to export all pipelines then no need to use -p flag"
       echo "  -s    Filter by state of build"
       echo "  -f    Filter by created_from"
       echo "  -t    Filter by created_to"
