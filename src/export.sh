@@ -87,6 +87,12 @@ for slug in "${slug_list[@]}"; do
              # Copy file to Artifact Folder
               cp pipelines_"${slug}-${page}".json pipelines/
         fi
+        
+        # Copy to User's S3 Bucket
+        if [ "$outputType" == "s3_bucket" ]; then
+             # Upload the pipeline and builds data files to User S3 bucket
+             aws s3 cp "pipelines_${slug}-${page}.json" s3://"$my_bucket_name"/
+        fi
         page=$((page + 1))
     done
 done
