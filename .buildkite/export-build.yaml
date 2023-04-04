@@ -1,9 +1,10 @@
 steps:
-  - label: "export build data to Local Machine"
+  - label: "Export JSON file to Local Machine"
     command: ./src/export.sh
+    env:
+     outputType: "local"
 
-  - label: "export build data to S3 Bucket"
-    command: ./src/export_s3.sh
-
-  - label: "export build data as Artifact"
-    command: ./src/export_artifact.sh
+  - label: "Export JSON file as Artifact"
+    command: ./src/export.sh
+    env:
+     outputType: "artifact"
