@@ -36,6 +36,7 @@ steps:
 To  export the build data for all pipelines to an S3 Bucket
 
 #### Requirement
+* Declare private s3 bucket name $my_bucket_name
 * awscli 
 * s3 bucket
 
