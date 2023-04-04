@@ -1,10 +1,10 @@
 steps:
   - label: "Export JSON file to Local Machine"
-    command: ./src/exportfile.sh
+    command: ./src/export.sh
     env:
      outputType: "local"
 
   - label: "Export JSON file as Artifact"
-    command: ./src/exportfile.sh
+    command: ./src/export.sh
     env:
      outputType: "artifact"
