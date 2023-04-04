@@ -13,16 +13,17 @@ mkdir pipelines
 
 # Function to print script usage information
 usage() {
-  echo "Usage: $0 -p <pipeline_slug> -s <build_state> -f <created_from> -t <created_to>"
+  echo "Usage: $0 -p <pipeline_slug> -s <build_state> -f <created_from> -t <created_to> -e <outputType>"
   echo "Options:"
   echo "  -p    Slug of pipeline you want to export. If you want to export all pipelines then no need to use -p flag"
   echo "  -s    Filter by state of build"
   echo "  -f    Filter by created_from"
   echo "  -t    Filter by created_to"
+  echo "  -e    Select Export Platform Type"
 }
 
 # flags for input parameters
-while getopts "hp:s:f:t:" opt; do
+while getopts "hp:s:f:t:e:" opt; do
   case $opt in
     h)
       usage
@@ -39,6 +40,9 @@ while getopts "hp:s:f:t:" opt; do
       ;;
     t)
       created_to=$OPTARG
+      ;;
+    e)
+      outputType=$OPTARG
       ;;
     \?)
       echo "Invalid option" >&2
@@ -162,3 +166,19 @@ for slug in "${slug_list[@]}"; do
     done
     echo "Generated file with build history for pipeline $slug"
 done
+
+# Checks which platform files should be exported to
+function external_export_format() {
+   # Copy to files to User Defined S3 Bucket
+    if [ "$outputType" == "bucket" ]; then
+        # Upload the pipeline and builds data files to User S3 bucket
+        aws s3 sync "pipelines/" s3://"$my_bucket_name"/
+    fi
+   
+  # Upload Artifact to S3 Bucket
+   if [ "$outputType" == "artifact" ]; then
+      # Upload Artifacts
+      buildkite-agent artifact upload "pipelines/*"
+   fi
+}
+external_export_format "$outputType"
