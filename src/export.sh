@@ -156,7 +156,7 @@ for slug in "${slug_list[@]}"; do
           rm  pipelines_"${slug}-${page}".json
         else
           # Copy file to Folder
-          cp pipelines_"${slug}-${page}".json pipelines/
+          mv pipelines_"${slug}-${page}".json pipelines/
         fi
         page=$((page + 1))
     done
