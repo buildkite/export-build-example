@@ -57,6 +57,12 @@ while getopts "hp:s:f:t:e:" opt; do
   esac
 done
 
+# Validate flags are set along with arguments
+if [ $# -gt 0 ] && [[ $1 != -* ]]; then
+  echo "Error: Invalid arguments. Please use flags to pass arguments."
+  exit 1
+fi
+
 # Validate input values for created_from and created_to
 function validate_date_range() {
   local from=$1
