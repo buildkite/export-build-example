@@ -3,8 +3,15 @@ steps:
     command: ./src/export.sh
     env:
      outputType: "local"
-
+     
   - label: "Export JSON file as Artifact"
     command: ./src/export.sh
     env:
      outputType: "artifact"
+     
+  - label: "Export JSON file to S3 Bucket"
+    command: ./src/export.sh
+    env:
+     outputType: "s3_bucket"
+    
+  
