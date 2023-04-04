@@ -6,6 +6,11 @@ pipeline_length=1
 query=""
 valid_states=("running" "scheduled" "passed" "failing" "failed" "blocked" "canceled" "canceling" "skipped" "not_run" "finished")
 
+if [ -d "pipelines/" ]; then
+    rm -r pipelines
+fi
+mkdir pipelines
+
 # Function to print script usage information
 usage() {
   echo "Usage: $0 -p <pipeline_slug> -s <build_state> -f <created_from> -t <created_to>"
