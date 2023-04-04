@@ -4,12 +4,43 @@ slug_list=()
 page=1
 pipeline_length=1
 state="$1"
+created_from="$2"
+created_to="$3"
+query=""
 valid_states=("running" "scheduled" "passed" "failing" "failed" "blocked" "canceled" "canceling" "skipped" "not_run" "finished")
 
-#Validate input values for state parameter
-if [[ ! " ${valid_states[@]} " =~ " $state " ]]; then
-  echo "Invalid input state: $state. Valid states are: ${valid_states[@]}"
-  exit 1
+# Validate input values for created_from and created_to
+function validate_date_range() {
+  local from=$1
+  local to=$2
+
+  if ! [[ "$from" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]] || ! [[ "$to" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+    echo "Invalid input: Dates must be in the format of YYYY-MM-DD for created_from and created_to filters"
+    exit 1
+  elif [[ "$from" && "$to" && "$from" > "$to" ]]; then
+    echo "Invalid date range: 'created_from' date should be earlier than 'created_to' date."
+    exit 1
+  fi
+}
+
+# Validate input value for state parameter
+if [ -z "$state" ]; then
+    echo "Going to fetch builds with any status"
+elif [[ "${valid_states[@]}" =~ "${state}" ]]; then
+    query+="state=${state}&"
+else
+    echo "Invalid input state: $state. Valid states are: ${valid_states[@]}"
+    exit 1
+fi
+
+# Generate the query parameters for curl
+if [[ "$created_from" && "$created_to" ]]; then
+  validate_date_range "$created_from" "$created_to"
+  query+="created_from=${created_from}&created_to=${created_to}&"
+elif [[ "$created_from" ]]; then
+  query+="created_from=${created_from}&"
+elif [[ "$created_to" ]]; then
+  query+="created_to=${created_to}&"
 fi
 
 # Make the curl request to get list of pipelines
@@ -45,19 +76,21 @@ while [ "${pipeline_length}" -ne 0 ];do
     page=$((page + 1))
 done
 
+# Create folder for generated artifacts
+if [ -d "pipelines/" ]; then
+   rm -r pipelines
+fi
+mkdir pipelines
+
 # Loop through the pipeline slug list and get list of builds for each pipeline slug
 for slug in "${slug_list[@]}"; do
     page=1
-    build_length=30
-
+    build_length=1
+    echo "Fetching list of builds for pipeline $slug"
     while [ "${build_length}" -ne 0 ];do
 
         # Set the list build endpoint URL for the current pipeline slug
-        api_url="https://api.buildkite.com/v2/organizations/$BUILDKITE_ORGANIZATION_SLUG/pipelines/$slug/builds?page=${page}"
-
-        if [ ! -f "$state" ]; then
-          api_url="https://api.buildkite.com/v2/organizations/$BUILDKITE_ORGANIZATION_SLUG/pipelines/$slug/builds?state=${state}&page=${page}"
-        fi
+        api_url="https://api.buildkite.com/v2/organizations/$BUILDKITE_ORGANIZATION_SLUG/pipelines/$slug/builds?${query}page=${page}"
 
         # Make the API request with curl and generate builds per pipeline in a file
         response_status=$(curl -s -H "Authorization: Bearer $TOKEN" -w "%{http_code}" -o "pipelines_${slug}-${page}.json" "${api_url}")
@@ -79,4 +112,5 @@ for slug in "${slug_list[@]}"; do
         fi
         page=$((page + 1))
     done
+    echo "Generated file with build history for pipeline $slug"
 done
