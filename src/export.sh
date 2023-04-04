@@ -6,16 +6,21 @@ pipeline_length=1
 query=""
 valid_states=("running" "scheduled" "passed" "failing" "failed" "blocked" "canceled" "canceling" "skipped" "not_run" "finished")
 
+# Function to print script usage information
+usage() {
+  echo "Usage: $0 -p <pipeline_slug> -s <build_state> -f <created_from> -t <created_to>"
+  echo "Options:"
+  echo "  -p    Slug of pipeline you want to export. If you want to export all pipelines then no need to use -p flag"
+  echo "  -s    Filter by state of build"
+  echo "  -f    Filter by created_from"
+  echo "  -t    Filter by created_to"
+}
+
 # flags for input parameters
 while getopts "hp:s:f:t:" opt; do
   case $opt in
     h)
-      echo "Usage: ./export.sh -p <pipeline_slug> -s <build_state> -f <created_from> -t <created_to>"
-      echo "Options:"
-      echo "  -p    Slug of pipeline you want to export. If you want to export all pipelines then no need to use -p flag"
-      echo "  -s    Filter by state of build"
-      echo "  -f    Filter by created_from"
-      echo "  -t    Filter by created_to"
+      usage
       exit 0
       ;;
     p)
@@ -31,11 +36,13 @@ while getopts "hp:s:f:t:" opt; do
       created_to=$OPTARG
       ;;
     \?)
-      echo "Invalid option: -$OPTARG" >&2
+      echo "Invalid option" >&2
+      usage
       exit 1
       ;;
     :)
       echo "Option -$OPTARG requires an argument." >&2
+      usage
       exit 1
       ;;
   esac
