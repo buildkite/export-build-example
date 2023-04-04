@@ -26,7 +26,7 @@ function validate_date_range() {
 # Validate input value for state parameter
 if [ -z "$state" ]; then
     echo "Going to fetch builds with any status"
-elif [[ "${valid_states[@]}" =~ "${state}" ]]; then
+elif [[ " ${valid_states[@]} " =~ " ${state} " ]]; then
     query+="state=${state}&"
 else
     echo "Invalid input state: $state. Valid states are: ${valid_states[@]}"
