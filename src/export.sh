@@ -3,11 +3,43 @@
 slug_list=()
 page=1
 pipeline_length=1
-state="$1"
-created_from="$2"
-created_to="$3"
 query=""
 valid_states=("running" "scheduled" "passed" "failing" "failed" "blocked" "canceled" "canceling" "skipped" "not_run" "finished")
+
+# flags for input parameters
+while getopts "hp:s:f:t:" opt; do
+  case $opt in
+    h)
+      echo "Usage: ./export.sh -p <pipeline_slug> -s <build_state> -f <created_from> -t <created_to>"
+      echo "Options:"
+      echo "  -p    slug of pipeline you want to export. If you want to export all pipelines then no need to use -p flag"
+      echo "  -s    Filter by state of build"
+      echo "  -f    Filter by created_from"
+      echo "  -t    Filter by created_to"
+      exit 0
+      ;;
+    p)
+      pipeline_slug=$OPTARG
+      ;;
+    s)
+      state=$OPTARG
+      ;;
+    f)
+      created_from=$OPTARG
+      ;;
+    t)
+      created_to=$OPTARG
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
 
 # Validate input values for created_from and created_to
 function validate_date_range() {
@@ -26,11 +58,11 @@ function validate_date_range() {
 # Validate input value for state parameter
 if [ -z "$state" ]; then
     echo "Going to fetch builds with any status"
-elif [[ " ${valid_states[@]} " =~ " ${state} " ]]; then
+elif [[  " ${valid_states[@]} " =~ " ${state} " ]]; then
     query+="state=${state}&"
 else
     echo "Invalid input state: $state. Valid states are: ${valid_states[@]}"
-    exit 1
+    exit 1 
 fi
 
 # Generate the query parameters for curl
@@ -43,12 +75,12 @@ elif [[ "$created_to" ]]; then
   query+="created_to=${created_to}&"
 fi
 
-# Make the curl request to get list of pipelines
-api_url="https://api.buildkite.com/v2/organizations/$BUILDKITE_ORGANIZATION_SLUG/pipelines"
+if [ -z "$pipeline_slug" ]; then
+  # Make the curl request to get list of pipelines
+  api_url="https://api.buildkite.com/v2/organizations/$BUILDKITE_ORGANIZATION_SLUG/pipelines"
 
-while [ "${pipeline_length}" -ne 0 ];do
-
-  response_status=$(curl -s -H "Authorization: Bearer $TOKEN" -w "%{http_code}" -o "pipelines-${page}.json" "${api_url}?page=${page}")
+  while [ "${pipeline_length}" -ne 0 ];do
+    response_status=$(curl -s -H "Authorization: Bearer $TOKEN" -w "%{http_code}" -o "pipelines-${page}.json" "${api_url}?page=${page}")
 
     # Check if the response code is 200 OK
     if [ "$response_status" -ne 200 ]; then
@@ -74,13 +106,10 @@ while [ "${pipeline_length}" -ne 0 ];do
     slug_list+=($slugs)
 
     page=$((page + 1))
-done
-
-# Create folder for generated artifacts
-if [ -d "pipelines/" ]; then
-   rm -r pipelines
+  done
 fi
-mkdir pipelines
+
+slug_list+=($pipeline_slug)
 
 # Loop through the pipeline slug list and get list of builds for each pipeline slug
 for slug in "${slug_list[@]}"; do
