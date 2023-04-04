@@ -1,4 +1,7 @@
-# Export-Build-Example
+# Pipeline Template Example: Export Builds
+
+[![Add to Buildkite](https://buildkite.com/button.svg)](https://buildkite.com/new)
+
 A pipeline template example to export builds via the API, stores the results as JSON file
 
 This repository is an example [Buildkite](https://buildkite.com/) pipeline for running scripts to get build data exported  to S3 Bucket, Artifact, or to the Local Machine 
