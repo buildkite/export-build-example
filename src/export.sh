@@ -6,7 +6,7 @@ pipeline_length=1
 state="$1"
 valid_states=("running" "scheduled" "passed" "failing" "failed" "blocked" "canceled" "canceling" "skipped" "not_run" "finished")
 
-#Validate input values for state parameter
+# Validate input values for state parameter
 if [[ ! " ${valid_states[@]} " =~ " $state " ]]; then
   echo "Invalid input state: $state. Valid states are: ${valid_states[@]}"
   exit 1
@@ -45,6 +45,12 @@ while [ "${pipeline_length}" -ne 0 ];do
     page=$((page + 1))
 done
 
+ # Create Folder for Artifact
+  if [ -d "pipelines/" ]; then
+        rm -r pipelines
+  fi
+  mkdir pipelines
+ 
 # Loop through the pipeline slug list and get list of builds for each pipeline slug
 for slug in "${slug_list[@]}"; do
     page=1
@@ -70,13 +76,23 @@ for slug in "${slug_list[@]}"; do
 
         build_length=$(jq -r '. | length' "pipelines_${slug}-${page}.json")
 
+
         # Check for empty file and remove it
         if [ "${build_length}" -eq 0 ]; then
           rm  pipelines_${slug}-${page}.json
-        else
-          # Copy file to Folder
-          cp pipelines_"${slug}-${page}".json pipelines/
+        fi
+
+        # Copy Artifact to Folder
+        if [ "$outputType" == "artifact" ]; then
+             # Copy file to Artifact Folder
+              cp pipelines_"${slug}-${page}".json pipelines/
         fi
         page=$((page + 1))
     done
 done
+
+# Upload Artifact to S3 Bucket
+  if [ "$outputType" == "artifact" ]; then
+      # Upload Artifacts
+      buildkite-agent artifact upload "pipeline*"
+  fi
