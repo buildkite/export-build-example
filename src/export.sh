@@ -159,8 +159,8 @@ for slug in "${slug_list[@]}"; do
         if [ "${build_length}" -eq 0 ]; then
           rm  pipelines_"${slug}-${page}".json
         else
-          # Move files to Folder
-            mv pipelines_"${slug}-${page}".json pipelines/
+          # Copy file to Folder
+          mv pipelines_"${slug}-${page}".json pipelines/
         fi
         page=$((page + 1))
     done
