@@ -32,6 +32,20 @@ steps:
 
 :lantern: Note: If you need permanent storage for the build data in your Private S3 Bucket. Follow [Using your own private AWS S3 Bucket](https://buildkite.com/docs/agent/v3/cli-artifact#using-your-private-aws-s3-bucket)
 
+### Upload Files to S3 Bucket
+To  export the build data for all pipelines to an S3 Bucket
+
+#### Requirement
+* awscli 
+* s3 bucket
+
+```yml
+steps:
+  - label: "export build data to S3 Bucket"
+    command: ./src/export_s3.sh
+    env:
+     outputType: "s3_bucket"
+```
 
 ## Adding Filters
 ### Timestamp Filter
