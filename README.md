@@ -59,7 +59,7 @@ steps:
 :warning: Warning: These files are stored in Buildkite's S3 Bucket, which will only be available for 6 months and has a max file size of 5GB per file. <br/>
 
 #### Artifact in UI
-![Screenshot of result in Buildkite User Interface](images/artifact.png)
+![Screenshot of result in Buildkite User Interface](artifact.png)
 
 :lantern: Note: If you need permanent storage for the build data in your Private S3 Bucket. Doing this will store all subsequent artifacts to the bucket. Follow [Using your own private AWS S3 Bucket](https://buildkite.com/docs/agent/v3/cli-artifact#using-your-private-aws-s3-bucket).
 
