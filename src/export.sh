@@ -53,8 +53,8 @@ function validate_date_range() {
   local from=$1
   local to=$2
 
-  if [[ $created_from != "" && $created_to == "" ]]; then
-    echo "Error: created_to is required when created_from is set for exporting data for a time interval"
+  if [[ $created_from != "" && $created_to == "" ]] || [[ $created_from == "" && $created_to != "" ]]; then
+    echo "Error: Both created_to and created_from are required when one of them is set for exporting data for a time interval"
     usage
     exit 1
   elif ! [[ "$from" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]] || ! [[ "$to" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
@@ -67,8 +67,10 @@ function validate_date_range() {
 }
 
 # Validate and generate the query parameters for time range filter
-validate_date_range "$created_from" "$created_to"
-query+="created_from=${created_from}&created_to=${created_to}&"
+if [ ! -z "$created_from" ] || [ ! -z "$created_to" ]; then
+  validate_date_range "$created_from" "$created_to"
+  query+="created_from=${created_from}&created_to=${created_to}&"
+fi
 
 # Validate input value for state parameter
 if [ -z "$state" ]; then
