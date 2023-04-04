@@ -41,7 +41,6 @@ while getopts "hp:s:f:t:e:" opt; do
     t)
       created_to=$OPTARG
       ;;
-
     e)
       outputType=$OPTARG
       ;;
