@@ -75,11 +75,18 @@ fi
 # Validate input value for state parameter
 if [ -z "$state" ]; then
     echo "Going to fetch builds with any status"
-elif [[  " ${valid_states[@]} " =~ " ${state} " ]]; then
-    query+="state=${state}&"
-else
-    echo "Invalid input state: $state. Valid states are: ${valid_states[@]}"
+else 
+  for i in "${valid_states[@]}"; do
+    if [ "$i" == "$state" ] ; then
+      query+="state=${state}&"
+      FOUND=1
+      break
+    fi
+  done
+  if [ "${FOUND:-0}" == "0" ]; then
+    echo "Invalid input state: $state. Valid states are: ${valid_states[*]}"
     exit 1 
+  fi
 fi
 
 if [ -z "$pipeline_slug" ]; then
@@ -141,7 +148,7 @@ for slug in "${slug_list[@]}"; do
 
         # Check for empty file and remove it
         if [ "${build_length}" -eq 0 ]; then
-          rm  pipelines_${slug}-${page}.json
+          rm  pipelines_"${slug}-${page}".json
         else
           # Copy file to Folder
           cp pipelines_"${slug}-${page}".json pipelines/
