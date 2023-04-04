@@ -17,7 +17,7 @@ steps:
 The files can be accessed on the local machine from the Builds directory ../buildkite-agent/builds. The respective pipeline folder contains the JSON files for each pipeline in the organization
 
 ### Get Files as Artifact
-To export the build data for all pipelines as an artifact. The Artifacts can be viewed and also downloaded
+In this example, the build data for all pipelines is exported as Artifacts, the Artifacts can be viewed and also downloaded. 
 ```yml
 steps:
   - label: "export build data as Artifact"
@@ -35,7 +35,7 @@ steps:
 
 ## Adding Filters
 ### Timestamp Filter
-To use the Timestamp Filter, you need to edit the build_url variable for the script in the src/ folder. The two attributes [created_from](https://buildkite.com/docs/apis/rest-api/builds#list-all-builds) & [created_to](https://buildkite.com/docs/apis/rest-api/builds#list-all-builds) are used to specify the date range and time. In script
+To use the Timestamp Filter, you need to edit the build_url variable for the script in the src/ folder. The two attributes [created_from](https://buildkite.com/docs/apis/rest-api/builds#list-all-builds) & [created_to](https://buildkite.com/docs/apis/rest-api/builds#list-all-builds) are used to specify the date range and time.
 
 ### Examples
 
