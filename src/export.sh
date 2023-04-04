@@ -67,7 +67,7 @@ function validate_date_range() {
 }
 
 # Validate and generate the query parameters for time range filter
-if [ ! -z "$created_from" ] || [ ! -z "$created_to" ]; then
+if [ -n "$created_from" ] || [ -n "$created_to" ]; then
   validate_date_range "$created_from" "$created_to"
   query+="created_from=${created_from}&created_to=${created_to}&"
 fi
