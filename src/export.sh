@@ -53,14 +53,22 @@ function validate_date_range() {
   local from=$1
   local to=$2
 
-  if ! [[ "$from" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]] || ! [[ "$to" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+  if [[ $created_from != "" && $created_to == "" ]]; then
+    echo "Error: created_to is required when created_from is set for exporting data for a time interval"
+    usage
+    exit 1
+  elif ! [[ "$from" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]] || ! [[ "$to" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
     echo "Invalid input: Dates must be in the format of YYYY-MM-DD for created_from and created_to filters"
     exit 1
-  elif [[ "$from" && "$to" && "$from" > "$to" ]]; then
+  elif [[ "$from" > "$to" ]]; then
     echo "Invalid date range: 'created_from' date should be earlier than 'created_to' date."
     exit 1
   fi
 }
+
+# Validate and generate the query parameters for time range filter
+validate_date_range "$created_from" "$created_to"
+query+="created_from=${created_from}&created_to=${created_to}&"
 
 # Validate input value for state parameter
 if [ -z "$state" ]; then
@@ -70,16 +78,6 @@ elif [[  " ${valid_states[@]} " =~ " ${state} " ]]; then
 else
     echo "Invalid input state: $state. Valid states are: ${valid_states[@]}"
     exit 1 
-fi
-
-# Generate the query parameters for curl
-if [[ "$created_from" && "$created_to" ]]; then
-  validate_date_range "$created_from" "$created_to"
-  query+="created_from=${created_from}&created_to=${created_to}&"
-elif [[ "$created_from" ]]; then
-  query+="created_from=${created_from}&"
-elif [[ "$created_to" ]]; then
-  query+="created_to=${created_to}&"
 fi
 
 if [ -z "$pipeline_slug" ]; then
