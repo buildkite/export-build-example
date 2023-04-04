@@ -23,7 +23,7 @@ usage() {
 }
 
 # flags for input parameters
-while getopts "hp:s:f:t:" opt; do
+while getopts "hp:s:f:t:e:" opt; do
   case $opt in
     h)
       usage
@@ -159,8 +159,8 @@ for slug in "${slug_list[@]}"; do
         if [ "${build_length}" -eq 0 ]; then
           rm  pipelines_"${slug}-${page}".json
         else
-          # Copy file to Folder
-          cp pipelines_"${slug}-${page}".json pipelines/
+          # Move files to Folder
+            mv pipelines_"${slug}-${page}".json pipelines/
         fi
         page=$((page + 1))
     done
