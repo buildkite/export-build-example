@@ -172,19 +172,15 @@ for slug in "${slug_list[@]}"; do
     done
     echo "Generated file with build history for pipeline $slug"
 done
+# Zip Folder
+zip -r pipelines-archive.zip pipelines/
 
 # Checks which platform files should be exported to
 function external_export_format() {
    # Copy to files to User Defined S3 Bucket
     if [ "$outputType" == "bucket" ]; then
         # Upload the pipeline and builds data files to User S3 bucket
-        aws s3 sync "pipelines/" s3://"$my_bucket_name"/
+        aws s3 cp "pipelines-archive.zip" s3://"$my_bucket_name"/
     fi
-   
-  # Upload Artifact to S3 Bucket
-   if [ "$outputType" == "artifact" ]; then
-      # Upload Artifacts
-      buildkite-agent artifact upload "pipelines/*"
-   fi
 }
 external_export_format "$outputType"
