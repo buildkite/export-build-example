@@ -172,7 +172,10 @@ for slug in "${slug_list[@]}"; do
     done
     echo "Generated file with build history for pipeline $slug"
 done
-# Zip Folder
+# Create Zip Folder
+if [ -f "pipelines-archive.zip" ]; then
+    rm pipelines-archive.zip
+fi
 zip -r pipelines-archive.zip pipelines/
 
 # Checks which platform files should be exported to
