@@ -185,5 +185,11 @@ function external_export_format() {
         # Upload the pipeline and builds data files to User S3 bucket
         aws s3 cp "pipelines-archive.zip" s3://"$my_bucket_name"/
     fi
+   
+  # Upload Artifact to S3 Bucket
+   if [ "$outputType" == "artifact" ]; then
+      # Upload Artifacts
+      buildkite-agent artifact upload "pipelines-archive.zip"
+   fi
 }
 external_export_format "$outputType"
