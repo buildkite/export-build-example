@@ -13,17 +13,17 @@ mkdir pipelines
 
 # Function to print script usage information
 usage() {
-  echo "Usage: $0 -p <pipeline_slug> -s <build_state> -f <created_from> -t <created_to> -e <outputType>"
+  echo "Usage: $0 -p <pipeline_slug> -s <build_state> -f <created_from> -t <created_to> -b <bucket_name>"
   echo "Options:"
   echo "  -p    Slug of pipeline you want to export. If you want to export all pipelines then no need to use -p flag"
   echo "  -s    Filter by state of build"
   echo "  -f    Filter by created_from"
   echo "  -t    Filter by created_to"
-  echo "  -e    Select Export Platform Type"
+  echo "  -b    S3 Bucket info"
 }
 
 # flags for input parameters
-while getopts "hp:s:f:t:e:" opt; do
+while getopts "hp:s:f:t:b:" opt; do
   case $opt in
     h)
       usage
@@ -41,8 +41,8 @@ while getopts "hp:s:f:t:e:" opt; do
     t)
       created_to=$OPTARG
       ;;
-    e)
-      outputType=$OPTARG
+    b)
+      bucket=$OPTARG
       ;;
     \?)
       echo "Invalid option" >&2
@@ -84,8 +84,12 @@ function validate_date_range() {
 # Validate and generate the query parameters for time range filter
 if [ -n "$created_from" ] || [ -n "$created_to" ]; then
   validate_date_range "$created_from" "$created_to"
-  query+="created_from=${created_from}&created_to=${created_to}&"
+else
+  created_from=$(date -v-90d +"%Y-%m-%d")
+  created_to=$(date +"%Y-%m-%d")
 fi
+
+query+="created_from=${created_from}&created_to=${created_to}&"
 
 # Validate input value for state parameter
 if [ -z "$state" ]; then
@@ -130,6 +134,9 @@ if [ -z "$pipeline_slug" ]; then
     if [ "${pipeline_length}" -eq 0 ]; then
       rm  pipelines-${page}.json
     fi
+    
+    # Copy file to Folder
+    mv pipelines-"${page}".json pipelines/    
 
     # Create a list with all the pipeline slugs
     slug_list+=($slugs)
@@ -173,18 +180,8 @@ for slug in "${slug_list[@]}"; do
     echo "Generated file with build history for pipeline $slug"
 done
 
-# Checks which platform files should be exported to
-function external_export_format() {
-   # Copy to files to User Defined S3 Bucket
-    if [ "$outputType" == "bucket" ]; then
-        # Upload the pipeline and builds data files to User S3 bucket
-        aws s3 sync "pipelines/" s3://"$my_bucket_name"/
-    fi
-   
-  # Upload Artifact to S3 Bucket
-   if [ "$outputType" == "artifact" ]; then
-      # Upload Artifacts
-      buildkite-agent artifact upload "pipelines/*"
-   fi
-}
-external_export_format "$outputType"
+# Copy to files to User Defined S3 Bucket
+if [ -z "$bucket" ]; then
+    # Upload the pipeline and builds data files to User S3 bucket
+    aws s3 sync "pipelines/" s3://"$bucket"/
+fi
