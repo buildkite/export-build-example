@@ -5,7 +5,7 @@ page=1
 pipeline_length=1
 query=""
 valid_states=("running" "scheduled" "passed" "failing" "failed" "blocked" "canceled" "canceling" "skipped" "not_run" "finished")
-
+z_flag=false
 if [ -d "pipelines/" ]; then
     rm -r pipelines
 fi
@@ -20,6 +20,7 @@ usage() {
   echo "  -f    Filter by created_from"
   echo "  -t    Filter by created_to"
   echo "  -b    S3 Bucket info"
+  echo "  -z    Export Files as Zip"
 }
 
 # flags for input parameters
@@ -43,6 +44,9 @@ while getopts "hp:s:f:t:b:" opt; do
       ;;
     b)
       bucket=$OPTARG
+      ;;
+    z)
+      z_flag=true
       ;;
     \?)
       echo "Invalid option" >&2
@@ -174,6 +178,10 @@ for slug in "${slug_list[@]}"; do
         else
           # Copy file to Folder
           mv pipelines_"${slug}-${page}".json pipelines/
+           if [ "$z_flag" == "true" ]; then
+              # Zip Folder
+              zip -r pipeline-archive.zip pipelines/
+           fi
         fi
         page=$((page + 1))
     done
@@ -182,6 +190,16 @@ done
 
 # Copy to files to User Defined S3 Bucket
 if [ -z "$bucket" ]; then
-    # Upload the pipeline and builds data files to User S3 bucket
-    aws s3 sync "pipelines/" s3://"$bucket"/
+    
+    # Checks if zip flag is set
+    if [ "$z_flag" == "true" ]; then
+        # Zip Folder
+        zip -r pipeline-archive.zip pipelines/
+        
+        # Upload the zipfile to User S3 bucket
+        aws s3 cp "pipeline-archive.zip" s3://"$bucket"/
+     else
+       # Upload the pipeline and builds data files to User S3 bucket
+       aws s3 cp "pipelines/" s3://"$bucket"/
+    fi
 fi
