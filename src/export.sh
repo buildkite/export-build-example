@@ -189,7 +189,7 @@ for slug in "${slug_list[@]}"; do
 done
 
 # Copy to files to User Defined S3 Bucket
-if [ -z "$bucket" ]; then
+if [ -n "$bucket" ]; then
     
     # Checks if zip flag is set
     if [ "$z_flag" == "true" ]; then
