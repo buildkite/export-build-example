@@ -181,7 +181,7 @@ for slug in "${slug_list[@]}"; do
 done
 
 # Copy to files to User Defined S3 Bucket
-if [ -z "$bucket" ]; then
+if [ -n "$bucket" ]; then
     # Upload the pipeline and builds data files to User S3 bucket
     aws s3 sync "pipelines/" s3://"$bucket"/
 fi
