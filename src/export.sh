@@ -24,7 +24,7 @@ usage() {
 }
 
 # flags for input parameters
-while getopts "hp:s:f:t:b:" opt; do
+while getopts "hp:s:f:t:b:z:" opt; do
   case $opt in
     h)
       usage
