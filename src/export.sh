@@ -84,15 +84,8 @@ function validate_date_range() {
 # Validate and generate the query parameters for time range filter
 if [ -n "$created_from" ] || [ -n "$created_to" ]; then
   validate_date_range "$created_from" "$created_to"
-  
-# Check if the system is macOS or Linux
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-  # macOS
-  created_from=$(date -v-90d +%Y-%m-%d)
-  created_to=$(date +"%Y-%m-%d")
 else
-  # Linux
-  created_from=$(date -d "90 days ago" +%Y-%m-%d)
+  created_from=$([ "$(uname)" = Linux ] && date --date="2 days ago" +"%Y"-"%m"-"%d" || date -v-2d +"%Y"-"%m"-"%d")
   created_to=$(date +"%Y-%m-%d")
 fi
 
