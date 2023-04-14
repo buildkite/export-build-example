@@ -89,7 +89,7 @@ function validate_date_range() {
 if [ -n "$created_from" ] || [ -n "$created_to" ]; then
   validate_date_range "$created_from" "$created_to"
 else
-  created_from=$(date -v-90d +"%Y-%m-%d")
+  created_from=$([ "$(uname)" = Linux ] && date --date="90 days ago" +"%Y"-"%m"-"%d" || date -v-90d +"%Y"-"%m"-"%d")
   created_to=$(date +"%Y-%m-%d")
 fi
 
@@ -190,7 +190,6 @@ done
 
 # Copy to files to User Defined S3 Bucket
 if [ -n "$bucket" ]; then
-    
     # Checks if zip flag is set
     if [ "$z_flag" == "true" ]; then
         # Zip Folder
@@ -202,4 +201,6 @@ if [ -n "$bucket" ]; then
        # Upload the pipeline and builds data files to User S3 bucket
        aws s3 cp "pipelines/" s3://"$bucket"/
     fi
+    # Upload the pipeline and builds data files to User S3 bucket
+    aws s3 sync "pipelines/" s3://"$bucket"/
 fi
