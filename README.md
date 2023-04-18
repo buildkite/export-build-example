@@ -10,7 +10,7 @@ Note: $TOKEN is the [User API Access Token](https://buildkite.com/user/api-acces
 
 
 ## Adding Filters
-Usage ./src/export.sh -p <pipeline_slug> -s <build_state> -f <created_from> -t <created_to>"
+Usage ./src/export.sh -p <pipeline_slug> -s <build_state> -f <created_from> -t <created_to> -b <bucket_name>
 
 | Flag Options  |  Usage      
 | ------------- | ------------- 
@@ -22,6 +22,7 @@ Usage ./src/export.sh -p <pipeline_slug> -s <build_state> -f <created_from> -t <
        
 * The two attributes [created_from](https://buildkite.com/docs/apis/rest-api/builds#list-all-builds) & [created_to](https://buildkite.com/docs/apis/rest-api/builds#list-all-builds) are used to specify the date range. If date range is not provided it will default to last 90 days 
 * Check Buildkite Valid [Build States](https://buildkite.com/docs/pipelines/defining-steps#build-states)
+* To export archieved files to S3 bucket use -b flag and pass bucket information
 
 ## Examples
 ### Get Files Locally
