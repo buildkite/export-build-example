@@ -8,7 +8,7 @@ This repository is an example [Buildkite](https://buildkite.com/) pipeline for r
 
 Note: $TOKEN is the [User API Access Token](https://buildkite.com/user/api-access-tokens). It can be set in the environment hook in .git/hooks/environment or using any methods in [managing pipeline secrets](https://buildkite.com/docs/pipelines/secrets#main)
 
-Below is an example of what the build data for a specific build for a pipeline will contain when exported using this export builds pipeline. Note that default the build data won't include `retried jobs`
+Below is an example of what the build data for a specific build for a pipeline will contain when exported using this export builds pipeline. Note that by default the build data won't include `retried jobs`
 
 ```
 {
