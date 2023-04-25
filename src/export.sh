@@ -199,8 +199,6 @@ if [ -n "$bucket" ]; then
         aws s3 cp "pipeline-archive.zip" s3://"$bucket"/
      else
        # Upload the pipeline and builds data files to User S3 bucket
-       aws s3 cp "pipelines/" s3://"$bucket"/
+       aws s3 sync "pipelines/" s3://"$bucket"/
     fi
-    # Upload the pipeline and builds data files to User S3 bucket
-    aws s3 sync "pipelines/" s3://"$bucket"/
 fi
