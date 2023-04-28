@@ -256,6 +256,11 @@ steps:
 * s3 bucket
 
 
+## Built-in Export
+
+We also provide a native export funcionality inside Buildkite for our enterprise customers. To learn more about how that works you can read the docs at https://buildkite.com/docs/pipelines/build-exports and we have information about our enterprise plan pricing here https://buildkite.com/pricing
+
+
 ## License
 
 See [License.md](License.md) (MIT)
